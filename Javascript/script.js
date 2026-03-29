@@ -40,3 +40,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+const link = document.getElementById("contactLink");
+
+if (link) {
+    link.innerText = CONTACT_NUMBER;
+    link.href = "tel:" + CONTACT_NUMBER;
+}
