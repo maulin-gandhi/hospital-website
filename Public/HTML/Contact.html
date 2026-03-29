@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact - Hemal Shah Clinic</title>
+    <link rel="stylesheet" href="../CSS/Style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>Contact Us</h1>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">Doctor</a>
+    <a href="services.html">Services</a>
+    <a href="contact.html">Contact</a>
+</nav>
+
+<section>
+
+    <h2>Contact Us</h2>
+
+    <p>📞 <a id="contactLink"></a></p>
+
+    <p>
+        📍 Om Shakti Building, 5, C.H.S, Charkop Sector 6,  
+        Kandivali West, Mumbai, Maharashtra 400067
+    </p>
+
+    <h3>Clinic Timings</h3>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Day</th>
+        <th>Morning</th>
+        <th>Evening</th>
+    </tr>
+
+    <tr>
+        <td>Monday</td>
+        <td>10:00 AM – 1:30 PM</td>
+        <td>6:00 PM – 10:30 PM</td>
+    </tr>
+
+    <tr>
+        <td>Tuesday</td>
+        <td>10:00 AM – 1:30 PM</td>
+        <td>6:00 PM – 10:30 PM</td>
+    </tr>
+
+    <tr>
+        <td>Wednesday</td>
+        <td>10:00 AM – 1:30 PM</td>
+        <td>6:00 PM – 10:30 PM</td>
+    </tr>
+
+    <tr>
+        <td>Thursday</td>
+        <td>10:00 AM – 1:30 PM</td>
+        <td>6:00 PM – 10:30 PM</td>
+    </tr>
+
+    <tr>
+        <td>Friday</td>
+        <td>10:00 AM – 1:30 PM</td>
+        <td>6:00 PM – 10:30 PM</td>
+    </tr>
+
+    <tr>
+        <td>Saturday</td>
+        <td>10:00 AM – 1:30 PM</td>
+        <td>6:00 PM – 10:30 PM</td>
+    </tr>
+
+    <tr>
+        <td>Sunday</td>
+        <td colspan="2">Closed</td>
+    </tr>
+</table>
+
+    <!-- GOOGLE MAP -->
+    <iframe 
+      src="https://www.google.com/maps?q=Om Shakti Building Charkop Kandivali West Mumbai&output=embed"
+      width="100%" height="300">
+    </iframe>
+
+   <form id="appointmentForm" class="contact-form">
+
+    <label>Name</label>
+    <input type="text" id="name" required>
+
+    <label>Phone</label>
+    <input type="text" id="phone" required>
+
+    <label>Email</label>
+    <input type="email" id="email">
+
+    <label>Date</label>
+    <input type="date" id="date" required>
+
+    <label>Time</label>
+    <input type="time" id="time" required>
+
+    <label>Message</label>
+    <textarea id="message"></textarea>
+
+    <button type="submit">Book Appointment</button>
+
+    <p id="formMessage"></p>
+
+</form>
+
+    <!-- WHATSAPP -->
+    <a href="https://wa.me/919869066447" target="_blank">
+        <button>Chat on WhatsApp</button>
+    </a>
+
+</section>
+
+<script src="../Javascript/config.js"></script>
+<script src="../Javascript/script.js"></script>
+
+<!-- ✅ ADD HERE -->
+<a href="https://wa.me/919869066447" class="whatsapp-float" target="_blank">
+    💬
+</a>
+</body>
+</html>

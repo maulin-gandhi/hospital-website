@@ -1,10 +1,11 @@
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql");
 
 const app = express();
 
-app.use(cors());
+app.use(express.static(path.join(__dirname + "/../Public")));
 app.use(express.json());
 
 // ✅ DB CONNECTION
@@ -68,6 +69,14 @@ app.delete("/delete/:id", (req, res) => {
     res.send("Deleted");
   });
 });
+
+// =============================
+// DEFAULT ROUTE
+// =============================
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../Public/HTML/index.html"));
+});
+
 
 // START
 const PORT = process.env.PORT || 3000;

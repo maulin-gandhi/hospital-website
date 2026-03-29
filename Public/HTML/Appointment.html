@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Appointment | Dr. Hemal Shah Clinic</title>
+    <link rel="stylesheet" href="../css/Style.css">
+</head>
+<body>
+
+<header>
+    <h1>Dr. Hemal Shah Clinic</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="doctor.html">Doctor</a>
+        <a href="services.html">Services</a>
+        <a href="appointment.html">Appointment</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+</header>
+
+<section class="section">
+    <h2>Book an Appointment</h2>
+
+    <p><strong>Clinic Contact Number:</strong> +91 9869066447</p>
+
+    <!-- POST FORM -->
+    <form id="appointmentForm">
+
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" name="phone"  required>
+        </div>
+
+
+        <div class="form-group">
+            <label>Appointment Date</label>
+            <input type="date" name="date" required>
+        </div>
+
+        <div class="form-group">
+            <label>Preferred Time</label>
+            <input type="time" name="time" required>
+        </div>
+
+        <div class="form-group">
+            <label>Message</label>
+            <textarea name="message"></textarea>
+        </div>
+
+        <button type="submit" class="btn">Submit Appointment</button>
+
+    </form>
+</section>
+
+<footer>
+    © 2026 Dr. Hemal Shah Clinic
+</footer>
+
+<script src="../Javascript/script.js"></script>
+</body>
+</html>
