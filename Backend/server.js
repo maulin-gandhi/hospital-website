@@ -5,9 +5,9 @@ const path = require('path');
 // Serve static files
 app.use(express.static(path.join(__dirname, 'Public')));
 
-// Default route (IMPORTANT)
+// Default route
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'Public', 'HTML', 'INDEX.HTML'));
+  res.sendFile(path.join(__dirname, 'Public', 'HTML', 'index.html'));
 });
 
 const PORT = process.env.PORT || 10000;
