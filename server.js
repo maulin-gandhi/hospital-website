@@ -11,8 +11,8 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'Public/HTML/index.html'));
 });
 
-// 🔥 IMPORTANT FIX (THIS LINE)
-app.get('*', (req, res) => {
+// FIXED fallback route
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'Public/HTML/index.html'));
 });
 
