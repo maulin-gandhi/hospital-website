@@ -40,6 +40,14 @@ app.use(session({
     saveUninitialized: true
 }));
 
+function checkAuth(req, res, next) {
+    if (req.session && req.session.loggedIn) {
+        next();
+    } else {
+        res.redirect('/login.html');
+    }
+}
+
 // Static files
 app.use(express.static(path.join(__dirname, 'Public')));
 
@@ -115,6 +123,10 @@ app.put('/appointments/:id', async (req, res) => {
 // Home route
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'Public/index.html'));
+});
+
+app.get('/admin.html', checkAuth, (req, res) =>{
+    res.sendFile(path.join(__dirname, 'Public/admin.html'));
 });
 
 //login route
