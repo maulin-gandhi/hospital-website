@@ -1,11 +1,18 @@
+const express = require('express');
+const path = require('path');
 const { Pool } = require('pg');
 
+const app = express();
+
+// ✅ PostgreSQL connection
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: {
         rejectUnauthorized: false
     }
 });
+
+// ✅ Create table automatically
 pool.query(`
     CREATE TABLE IF NOT EXISTS appointments (
         id SERIAL PRIMARY KEY,
@@ -17,10 +24,6 @@ pool.query(`
         message TEXT
     )
 `);
-const express = require('express');
-const path = require('path');
-
-const app = express();
 
 // Middleware
 app.use(express.json());
@@ -29,10 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 // Static files
 app.use(express.static(path.join(__dirname, 'Public')));
 
-// Store data temporarily
-let appointments = [];
-
-// Handle form submission
+// ✅ POST route (save to DB)
 app.post('/appointment', async (req, res) => {
     const { name, phone, email, date, time, message } = req.body;
 
@@ -43,7 +43,6 @@ app.post('/appointment', async (req, res) => {
         );
 
         console.log("Saved to DB");
-
         res.json({ success: true });
 
     } catch (err) {
