@@ -94,8 +94,8 @@ fetch('/appointments')
     <td>${item.time}</td>
     <td>${item.message || '-'}</td>
     <td>
-        <button onclick="editAppointment(${item.id})">Edit</button>
-        <button onclick="deleteAppointment(${item.id})">Delete</button>
+        <button class="edit-btn" onclick="editAppointment(${item.id})">Edit</button>
+        <button class="delete-btn" onclick="deleteAppointment(${item.id})">Delete</button>
     </td>
 </tr>
 `;
