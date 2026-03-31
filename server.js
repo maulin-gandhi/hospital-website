@@ -51,6 +51,16 @@ app.post('/appointment', async (req, res) => {
     }
 });
 
+app.get('/appointments', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM appointments ORDER BY id DESC');
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error fetching data");
+    }
+});
+
 // Home route
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'Public/index.html'));
