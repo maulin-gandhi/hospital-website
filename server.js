@@ -48,6 +48,10 @@ function checkAuth(req, res, next) {
     }
 }
 
+app.get('/admin.html', checkAuth, (req, res) =>{
+    res.sendFile(path.join(__dirname, 'Public/admin.html'));
+});
+
 // Static files
 app.use(express.static(path.join(__dirname, 'Public')));
 
