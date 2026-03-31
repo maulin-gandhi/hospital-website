@@ -25,6 +25,11 @@ pool.query(`
     )
 `);
 
+await pool.query(`
+    ALTER TABLE appointments 
+    ADD COLUMN IF NOT EXISTS appointment_id TEXT;
+`);
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -37,12 +42,19 @@ app.post('/appointment', async (req, res) => {
     const { name, phone, email, date, time, message } = req.body;
 
     try {
+        // Get count
+        const countResult = await pool.query('SELECT COUNT(*) FROM appointments');
+        const count = parseInt(countResult.rows[0].count) + 1;
+
+        // Generate ID like APT-001
+        const appointmentId = `APT-${String(count).padStart(3, '0')}`;
+
         await pool.query(
-            'INSERT INTO appointments(name, phone, email, date, time, message) VALUES($1, $2, $3, $4, $5, $6)',
-            [name, phone, email, date, time, message]
+            `INSERT INTO appointments(appointment_id, name, phone, email, date, time, message)
+             VALUES($1, $2, $3, $4, $5, $6, $7)`,
+            [appointmentId, name, phone, email, date, time, message]
         );
 
-        console.log("Saved to DB");
         res.json({ success: true });
 
     } catch (err) {

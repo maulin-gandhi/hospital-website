@@ -61,6 +61,7 @@
 <table>
     <thead>
         <tr>
+            <th>Appointment ID</th>
             <th>ID</th>
             <th>Name</th>
             <th>Phone</th>
@@ -84,20 +85,20 @@ fetch('/appointments')
 
     data.forEach(item => {
         const row = `
-            <tr>
-                <td>${item.id}</td>
-                <td>${item.name}</td>
-                <td>${item.phone}</td>
-                <td>${item.email || '-'}</td>
-                <td>${item.date}</td>
-                <td>${item.time}</td>
-                <td>${item.message || '-'}</td>
-                <td>
-                    <button class="edit-btn" onclick="editAppointment(${item.id}, '${item.name}', '${item.phone}', '${item.email}', '${item.date}', '${item.time}', '${item.message}')">Edit</button>
-                    <button class="delete-btn" onclick="deleteAppointment(${item.id})">Delete</button>
-                </td>
-            </tr>
-        `;
+<tr>
+    <td>${item.appointment_id || 'N/A'}</td>
+    <td>${item.name}</td>
+    <td>${item.phone}</td>
+    <td>${item.email || '-'}</td>
+    <td>${item.date}</td>
+    <td>${item.time}</td>
+    <td>${item.message || '-'}</td>
+    <td>
+        <button onclick="editAppointment(${item.id})">Edit</button>
+        <button onclick="deleteAppointment(${item.id})">Delete</button>
+    </td>
+</tr>
+`;
         tbody.innerHTML += row;
     });
 });
