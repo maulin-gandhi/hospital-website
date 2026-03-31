@@ -17,26 +17,26 @@
 </div>
 
 <script>
+async function login() {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-function login() {
-    const user = document.getElementById("username").value;
-    const pass = document.getElementById("password").value;
+    const res = await fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    });
 
-    // 🔐 Simple login (we will improve later)
-    if (user === "admin" && pass === "Admin@123") {
-        localStorage.setItem("isLoggedIn", "true");
-        window.location.href = "admin.html";
+    const data = await res.json();
+
+    if (data.success) {
+        window.location.href = "/admin.html";
     } else {
         alert("Invalid login!");
     }
 }
-
-document.addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-        login();
-    }
-});
-
 </script>
 
 </body>
