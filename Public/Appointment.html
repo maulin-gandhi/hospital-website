@@ -23,43 +23,26 @@
     <p><strong>Clinic Contact Number:</strong> +91 9869066447</p>
 
     <!-- POST FORM -->
-    <form id="appointmentForm">
+    <form action="/appointment" method="POST">
 
-        <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" name="name" required>
-        </div>
+    <input type="text" name="name" placeholder="Full Name" required><br><br>
 
-        <div class="form-group">
-            <label>Phone Number</label>
-            <input type="tel" name="phone"  required>
-        </div>
+    <input type="tel" name="phone" placeholder="Phone Number" required><br><br>
 
+    <input type="date" name="date" required><br><br>
 
-        <div class="form-group">
-            <label>Appointment Date</label>
-            <input type="date" name="date" required>
-        </div>
+    <input type="time" name="time" required><br><br>
 
-        <div class="form-group">
-            <label>Preferred Time</label>
-            <input type="time" name="time" required>
-        </div>
+    <textarea name="message" placeholder="Message"></textarea><br><br>
 
-        <div class="form-group">
-            <label>Message</label>
-            <textarea name="message"></textarea>
-        </div>
+    <button type="submit">Book Appointment</button>
 
-        <button type="submit" class="btn">Submit Appointment</button>
-
-    </form>
+</form>
 </section>
 
 <footer>
     © 2026 Dr. Hemal Shah Clinic
 </footer>
 
-<script src="../Javascript/script.js"></script>
 </body>
 </html>

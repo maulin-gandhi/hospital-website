@@ -87,31 +87,32 @@
       width="100%" height="300">
     </iframe>
 
-   <form id="appointmentForm" class="contact-form">
+<section class="contact-section">
 
-    <label>Name</label>
-    <input type="text" id="name" required>
+    <form action="/appointment" method="POST" id="appointmentForm" class="contact-form">
 
-    <label>Phone</label>
-    <input type="text" id="phone" required>
+        <h2>Book Appointment</h2>
 
-    <label>Email</label>
-    <input type="email" id="email">
+        <input type="text" name="name" placeholder="Full Name" required>
 
-    <label>Date</label>
-    <input type="date" id="date" required>
+        <input type="text" name="phone" placeholder="Phone Number" required>
 
-    <label>Time</label>
-    <input type="time" id="time" required>
+        <input type="email" name="email" placeholder="Email (optional)">
 
-    <label>Message</label>
-    <textarea id="message"></textarea>
+        <input type="date" name="date" required>
 
-    <button type="submit">Book Appointment</button>
+        <input type="time" name="time" required>
 
-    <p id="formMessage"></p>
+        <textarea name="message" placeholder="Message"></textarea>
 
-</form>
+        <button type="submit">Book Appointment</button>
+
+        <p id="formMessage"></p>
+
+    </form>
+
+</section>
+ 
 
     <!-- WHATSAPP -->
     <a href="https://wa.me/919869066447" target="_blank">
@@ -120,12 +121,45 @@
 
 </section>
 
-<script src="../Javascript/config.js"></script>
-<script src="../Javascript/script.js"></script>
 
 <!-- ✅ ADD HERE -->
-<a href="https://wa.me/919869066447" class="whatsapp-float" target="_blank">
-    💬
-</a>
+<a href="https://wa.me/919869066447" class="whatsapp-float" target="_blank">💬</a>
+
+<script>
+document.getElementById("appointmentForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    const data = {
+        name: formData.get("name"),
+        phone: formData.get("phone"),
+        email: formData.get("email"),
+        date: formData.get("date"),
+        time: formData.get("time"),
+        message: formData.get("message")
+    };
+
+    try {
+        await fetch("/appointment", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        document.getElementById("formMessage").innerText = "✅ Appointment booked successfully!";
+        document.getElementById("formMessage").style.color = "green";
+
+        document.getElementById("appointmentForm").reset();
+
+    } catch (error) {
+        document.getElementById("formMessage").innerText = "❌ Error booking appointment";
+        document.getElementById("formMessage").style.color = "red";
+    }
+});
+</script>
+
 </body>
 </html>
