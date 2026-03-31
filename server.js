@@ -25,7 +25,7 @@ pool.query(`
     )
 `);
 
-await pool.query(`
+pool.query(`
     ALTER TABLE appointments 
     ADD COLUMN IF NOT EXISTS appointment_id TEXT;
 `);
