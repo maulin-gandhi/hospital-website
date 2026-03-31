@@ -121,6 +121,9 @@ app.get('/', (req, res) => {
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
+    console.log("ENV USER:", process.env.ADMIN_USER_1);
+    console.log("ENV PASS:", process.env.ADMIN_PASS_1);
+
     const users = [
         {
             username: process.env.ADMIN_USER_1,
