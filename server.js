@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const path = require('path');
 const { Pool } = require('pg');
 
@@ -33,6 +34,11 @@ pool.query(`
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+    secret: 'clinic_secret_key',
+    resave: false,
+    saveUninitialized: true
+}));
 
 // Static files
 app.use(express.static(path.join(__dirname, 'Public')));
@@ -109,6 +115,48 @@ app.put('/appointments/:id', async (req, res) => {
 // Home route
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'Public/index.html'));
+});
+
+//login route
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    const users = [
+        {
+            username: process.env.ADMIN_USER_1,
+            password: process.env.ADMIN_PASS_1
+        },
+        {
+            username: process.env.ADMIN_USER_2,
+            password: process.env.ADMIN_PASS_2
+        }
+    ];
+
+    const validUser = users.find(
+        u => u.username === username && u.password === password
+    );
+
+    if (validUser) {
+        req.session.loggedIn = true;
+        res.json({ success: true });
+    } else {
+        res.json({ success: false });
+    }
+});
+
+// 🔐 ADD THIS HERE (AUTH MIDDLEWARE)
+function checkAuth(req, res, next) {
+    if (req.session.loggedIn) {
+        next();
+    } else {
+        res.redirect('/login.html');
+    }
+}
+
+
+// 🔐 PROTECT ADMIN PAGE
+app.get('/admin.html', checkAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, 'Public/admin.html'));
 });
 
 const PORT = process.env.PORT || 10000;
