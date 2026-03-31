@@ -121,44 +121,15 @@ app.get('/', (req, res) => {
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
-    console.log("INPUT USER:", username);
-    console.log("INPUT PASS:", password);
+    console.log("INPUT:", username, password);
 
-    console.log("ENV USER:", process.env.ADMIN_USER_1);
-    console.log("ENV PASS:", process.env.ADMIN_PASS_1);
-
-    const users = [
-        {
-            username: process.env.ADMIN_USER_1,
-            password: process.env.ADMIN_PASS_1
-        },
-        {
-            username: process.env.ADMIN_USER_2,
-            password: process.env.ADMIN_PASS_2
-        }
-    ];
-
-    const validUser = users.find(
-        u => u.username === username && u.password === password
-    );
-
-    if (validUser) {
+    if (username === "maulin_admin" && password === "MaulinClinic#2026") {
         req.session.loggedIn = true;
         res.json({ success: true });
     } else {
         res.json({ success: false });
     }
 });
-
-// 🔐 ADD THIS HERE (AUTH MIDDLEWARE)
-function checkAuth(req, res, next) {
-    if (req.session.loggedIn) {
-        next();
-    } else {
-        res.redirect('/login.html');
-    }
-}
-
 
 // 🔐 PROTECT ADMIN PAGE
 app.get('/admin.html', checkAuth, (req, res) => {
