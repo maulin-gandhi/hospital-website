@@ -62,7 +62,6 @@
     <thead>
         <tr>
             <th>Appointment ID</th>
-            <th>ID</th>
             <th>Name</th>
             <th>Phone</th>
             <th>Email</th>
@@ -80,25 +79,30 @@
 fetch('/appointments')
 .then(res => res.json())
 .then(data => {
-    const tbody = document.getElementById("tableBody");
-    tbody.innerHTML = "";
+    const tbody = document.querySelector("tbody");
+
+    // ✅ ADD THIS HERE
+    if (data.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='8'>No appointments yet</td></tr>";
+        return; // stop further execution
+    }
 
     data.forEach(item => {
         const row = `
-<tr>
-    <td>${item.appointment_id || 'N/A'}</td>
-    <td>${item.name}</td>
-    <td>${item.phone}</td>
-    <td>${item.email || '-'}</td>
-    <td>${item.date}</td>
-    <td>${item.time}</td>
-    <td>${item.message || '-'}</td>
-   <td>
-    <button class="edit-btn" onclick="editAppointment(${item.id})">✏ Edit</button>
-    <button class="delete-btn" onclick="deleteAppointment(${item.id})">🗑 Delete</button>
-</td>
-</tr>
-`;
+            <tr>
+                <td>${item.appointment_id}</td>
+                <td>${item.name}</td>
+                <td>${item.phone}</td>
+                <td>${item.email || '-'}</td>
+                <td>${item.date}</td>
+                <td>${item.time}</td>
+                <td>${item.message || '-'}</td>
+                <td>
+                    <button class="edit-btn" onclick="editAppointment(${item.id})">✏ Edit</button>
+                    <button class="delete-btn" onclick="deleteAppointment(${item.id})">🗑 Delete</button>
+                </td>
+            </tr>
+        `;
         tbody.innerHTML += row;
     });
 });
