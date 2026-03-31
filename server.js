@@ -13,7 +13,7 @@ const pool = new Pool({
     }
 });
 
-// ✅ Create table automatically
+// ✅ Create table
 pool.query(`
     CREATE TABLE IF NOT EXISTS appointments (
         id SERIAL PRIMARY KEY,
@@ -31,15 +31,23 @@ pool.query(`
     ADD COLUMN IF NOT EXISTS appointment_id TEXT;
 `);
 
-// Middleware
+// ✅ Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(session({
     secret: 'clinic_secret_key',
     resave: false,
     saveUninitialized: true
 }));
 
+// ✅ Static files
+app.use(express.static(path.join(__dirname, 'Public')));
+
+
+// ===============================
+// ✅ AUTH FUNCTION (VERY IMPORTANT)
+// ===============================
 function checkAuth(req, res, next) {
     if (req.session && req.session.loggedIn) {
         next();
@@ -48,23 +56,55 @@ function checkAuth(req, res, next) {
     }
 }
 
-app.get('/admin.html', checkAuth, (req, res) =>{
+
+// ===============================
+// ✅ LOGIN ROUTE
+// ===============================
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    const users = [
+        {
+            username: process.env.ADMIN_USER_1,
+            password: process.env.ADMIN_PASS_1
+        },
+        {
+            username: process.env.ADMIN_USER_2,
+            password: process.env.ADMIN_PASS_2
+        }
+    ];
+
+    const validUser = users.find(
+        u => u.username === username && u.password === password
+    );
+
+    if (validUser) {
+        req.session.loggedIn = true;
+        res.json({ success: true });
+    } else {
+        res.json({ success: false });
+    }
+});
+
+
+// ===============================
+// ✅ PROTECTED ADMIN PAGE
+// ===============================
+app.get('/admin.html', checkAuth, (req, res) => {
     res.sendFile(path.join(__dirname, 'Public/admin.html'));
 });
 
-// Static files
-app.use(express.static(path.join(__dirname, 'Public')));
 
-// ✅ POST route (save to DB)
+// ===============================
+// ✅ CREATE APPOINTMENT
+// ===============================
 app.post('/appointment', async (req, res) => {
     const { name, phone, email, date, time, message } = req.body;
 
     try {
-        // Get count
         const countResult = await pool.query('SELECT COUNT(*) FROM appointments');
         const count = parseInt(countResult.rows[0].count) + 1;
 
-        // Generate ID like APT-001
         const appointmentId = `APT-${String(count).padStart(3, '0')}`;
 
         await pool.query(
@@ -81,6 +121,10 @@ app.post('/appointment', async (req, res) => {
     }
 });
 
+
+// ===============================
+// ✅ GET APPOINTMENTS
+// ===============================
 app.get('/appointments', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM appointments ORDER BY id DESC');
@@ -91,6 +135,10 @@ app.get('/appointments', async (req, res) => {
     }
 });
 
+
+// ===============================
+// ✅ DELETE
+// ===============================
 app.delete('/appointments/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -104,6 +152,10 @@ app.delete('/appointments/:id', async (req, res) => {
     }
 });
 
+
+// ===============================
+// ✅ UPDATE
+// ===============================
 app.put('/appointments/:id', async (req, res) => {
     const { id } = req.params;
     const { name, phone, email, date, time, message } = req.body;
@@ -124,34 +176,18 @@ app.put('/appointments/:id', async (req, res) => {
     }
 });
 
-// Home route
+
+// ===============================
+// ✅ HOME
+// ===============================
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'Public/index.html'));
 });
 
-app.get('/admin.html', checkAuth, (req, res) =>{
-    res.sendFile(path.join(__dirname, 'Public/admin.html'));
-});
 
-//login route
-app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-
-    console.log("INPUT:", username, password);
-
-    if (username === "maulin_admin" && password === "MaulinClinic#2026") {
-        req.session.loggedIn = true;
-        res.json({ success: true });
-    } else {
-        res.json({ success: false });
-    }
-});
-
-// 🔐 PROTECT ADMIN PAGE
-app.get('/admin.html', checkAuth, (req, res) => {
-    res.sendFile(path.join(__dirname, 'Public/admin.html'));
-});
-
+// ===============================
+// ✅ START SERVER
+// ===============================
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
