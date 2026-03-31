@@ -74,6 +74,26 @@ app.delete('/appointments/:id', async (req, res) => {
     }
 });
 
+app.put('/appointments/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, phone, email, date, time, message } = req.body;
+
+    try {
+        await pool.query(
+            `UPDATE appointments 
+             SET name=$1, phone=$2, email=$3, date=$4, time=$5, message=$6 
+             WHERE id=$7`,
+            [name, phone, email, date, time, message, id]
+        );
+
+        res.json({ success: true });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error updating appointment");
+    }
+});
+
 // Home route
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'Public/index.html'));
