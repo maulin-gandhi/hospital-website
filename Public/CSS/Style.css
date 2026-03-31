@@ -416,3 +416,36 @@ button {
 .delete-btn:hover {
     background-color: #c82333;
 }
+
+button {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 2px;
+    transition: 0.2s ease;
+}
+
+/* Edit */
+.edit-btn {
+    background: #28a745;
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #218838;
+    transform: scale(1.05);
+}
+
+/* Delete */
+.delete-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+    transform: scale(1.05);
+}
