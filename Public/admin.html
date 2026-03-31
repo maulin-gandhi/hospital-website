@@ -37,6 +37,7 @@
             <th>Date</th>
             <th>Time</th>
             <th>Message</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody></tbody>
@@ -57,11 +58,24 @@ fetch('/appointments')
                 <td>${item.date}</td>
                 <td>${item.time}</td>
                 <td>${item.message || '-'}</td>
+                <td>
+                    <button onclick="deleteAppointment(${item.id})">Delete</button>
+                </td>
             </tr>
         `;
         tbody.innerHTML += row;
     });
 });
+
+function deleteAppointment(id) {
+    fetch('/appointments/' + id, {
+        method: 'DELETE'
+    })
+    .then(() => {
+        alert("Deleted!");
+        location.reload();
+    });
+}
 </script>
 
 </body>

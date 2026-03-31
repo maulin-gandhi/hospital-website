@@ -61,6 +61,19 @@ app.get('/appointments', async (req, res) => {
     }
 });
 
+app.delete('/appointments/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        await pool.query('DELETE FROM appointments WHERE id = $1', [id]);
+
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error deleting appointment");
+    }
+});
+
 // Home route
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'Public/index.html'));
