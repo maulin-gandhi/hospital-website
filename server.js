@@ -86,6 +86,12 @@ app.post('/login', (req, res) => {
     }
 });
 
+app.get('/logout', (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/login.html');
+    });
+});
+
 
 // ===============================
 // ✅ PROTECTED ADMIN PAGE
