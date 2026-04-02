@@ -32,6 +32,7 @@ async function login() {
     console.log(data); // 👈 IMPORTANT (for debug)
 
     if (data.success) {
+        localStorage.setItem("isLoggedIn", "true");
         window.location.href = "/admin.html";
     } else {
         alert("Invalid login!");

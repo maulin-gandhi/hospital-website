@@ -82,6 +82,10 @@
 
 <script>
 
+    if (!localStorage.getItem("isLoggedIn")) {
+        window.Location.href = "/login.html";
+    }
+
 // 🔄 LOAD DATA
 fetch('/appointments')
 .then(res => res.json())
@@ -146,7 +150,8 @@ function editAppointment(id) {
 
 // 🚪 LOGOUT
 function logout() {
-    window.location.href = "/logout";
+    localStorage.removeItem("isLoggedIn");
+    window.location.href = "/login.html";
 }
 
 </script>
